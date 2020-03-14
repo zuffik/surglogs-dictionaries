@@ -10,7 +10,8 @@ also `CYPRESS_BASE_URL` env variable to match this port.
 
 Components used in app are created by [Material-UI](https://material-ui.com).
 Centralized theme, my skills with this framework and some performance features of library
-are the main reasons for using this library.
+are the main reasons for using this library. You can view some components using
+[Storybook](https://storybook.js.org) by running `yarn storybook`.
 
 The app contains a few issues which can be resolved (eg. google can't translate from each
 language to any) but I considered them irrelevant.
