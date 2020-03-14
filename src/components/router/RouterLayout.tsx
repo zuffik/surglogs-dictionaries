@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Redirect, Route, Switch } from 'react-router'
 import { LoginFormRedux } from '../login/LoginForm'
 import { AuthRouteRedux } from './AuthRoute'
@@ -9,7 +9,6 @@ import { DictionaryFormRedux } from '../dictionary/DictionaryForm'
 interface Props {}
 
 export const RouterLayout: React.FC<Props> = (
-  props: Props
 ): React.ReactElement => {
   return (
     <Box p={3}>

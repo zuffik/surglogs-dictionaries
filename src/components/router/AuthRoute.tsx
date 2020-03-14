@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { User } from '../../types/User'
 import { useSelector } from 'react-redux'
 import { State } from '../../redux/State'

@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { makeStyles, Theme } from '@material-ui/core/styles'
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
 import { Box, Button, Card, Grid, List, Typography } from '@material-ui/core'
 import { Dictionary } from '../../types/Dictionary'
 import { useSelector } from 'react-redux'
@@ -9,10 +9,10 @@ import { Alert, AlertTitle } from '@material-ui/lab'
 import { DictionaryListItem } from './DictionaryListItem'
 
 interface Props {
-  dictionaries: Dictionary[]
+    dictionaries: Dictionary[]
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   card: {
     width: '30%'
   }
@@ -23,41 +23,42 @@ export const DictionaryList: React.FC<Props> = (
 ): React.ReactElement => {
   const styles = useStyles(props)
   return (
-    <>
-      <Typography variant='h3'>Dictionaries</Typography>
-      {props.dictionaries.length > 0 ? (
-        <Card classes={{ root: styles.card }} elevation={3}>
-          <List>
-            {props.dictionaries.map(item => (
-              <DictionaryListItem key={item.id} dictionary={item} />
-            ))}
-          </List>
-        </Card>
-      ) : (
-        <Alert severity='info'>
-          <AlertTitle>Info</AlertTitle>
-          No dictionaries found
-        </Alert>
-      )}
-      <Box mt={2}>
-        <Grid container spacing={2}>
-          <Grid item>
-            <Button
-              color='primary'
-              variant='contained'
-              component={Link}
-              to='/dictionary/create'
-            >
-              Create dictionary
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
-    </>
+        <>
+          <Typography variant='h3'>Dictionaries</Typography>
+          {props.dictionaries.length > 0 ? (
+            <Card classes={{ root: styles.card }} elevation={3}>
+              <List>
+                {props.dictionaries.map(item => (
+                  <DictionaryListItem key={item.id} dictionary={item} />
+                ))}
+              </List>
+            </Card>
+          ) : (
+            <Alert severity='info'>
+              <AlertTitle>Info</AlertTitle>
+                    No dictionaries found
+            </Alert>
+          )}
+          <Box mt={2}>
+            <Grid container spacing={2}>
+              <Grid item>
+                <Button
+                  color='primary'
+                  variant='contained'
+                  component={Link}
+                  to='/dictionary/create'
+                >
+                            Create dictionary
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
+        </>
   )
 }
 
-interface ReduxInputProps extends Partial<Props> {}
+interface ReduxInputProps extends Partial<Props> {
+}
 
 export const DictionaryListRedux: React.FC<ReduxInputProps> = (
   props: ReduxInputProps

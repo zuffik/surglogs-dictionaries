@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { TextFieldProps } from '@material-ui/core/TextField'
 import { LinearProgress, MenuItem, TextField } from '@material-ui/core'
 import * as _ from 'lodash'

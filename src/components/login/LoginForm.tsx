@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { makeStyles, Theme } from '@material-ui/core/styles'
 import {
   Avatar,

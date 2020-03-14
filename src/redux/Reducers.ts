@@ -24,15 +24,15 @@ export const reducers: Reducers<State, any> = {
   ) => {
     state.formDictionary = action.payload
       ? _.find(
-          state.dictionaries,
-          i => i.id.toString() === action.payload!.id
-        ) || {
-          id: '',
-          phrases: [],
-          label: '',
-          originLanguage: state.defaultOriginLanguage,
-          targetLanguage: state.defaultTargetLanguage
-        }
+        state.dictionaries,
+        i => i.id.toString() === action.payload!.id
+      ) || {
+        id: '',
+        phrases: [],
+        label: '',
+        originLanguage: state.defaultOriginLanguage,
+        targetLanguage: state.defaultTargetLanguage
+      }
       : undefined
     if (!state.formDictionary) {
       state.translations = {}

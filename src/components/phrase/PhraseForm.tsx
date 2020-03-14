@@ -1,11 +1,6 @@
-import * as React from 'react'
-import { makeStyles, Theme } from '@material-ui/core/styles'
-import {
-  CircularProgress,
-  Grid,
-  IconButton,
-  TextField
-} from '@material-ui/core'
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import { CircularProgress, Grid, IconButton, TextField } from '@material-ui/core'
 import Delete from '@material-ui/icons/Delete'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '../../redux/Actions'
@@ -16,21 +11,21 @@ import { State } from '../../redux/State'
 import { Autocomplete } from '@material-ui/lab'
 
 interface Props {
-  originalText: string
-  onOriginalTextChange: (value: string) => void
+    originalText: string
+    onOriginalTextChange: (value: string) => void
 
-  translatedText: string
-  onTranslatedTextChange: (value: string) => void
+    translatedText: string
+    onTranslatedTextChange: (value: string) => void
 
-  onPlayTextClick: (source: 'original' | 'translated', text: string) => void
+    onPlayTextClick: (source: 'original' | 'translated', text: string) => void
 
-  hints?: Resource<string[]>
-  phraseId: string
+    hints?: Resource<string[]>
+    phraseId: string
 
-  onRemove: () => void
+    onRemove: () => void
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   field: {
     width: '100%'
   }
@@ -104,8 +99,8 @@ export const PhraseForm: React.FC<Props> = (
 }
 
 interface ReduxInputProps extends Partial<Props> {
-  phraseId: string
-  dictionary: Dictionary
+    phraseId: string
+    dictionary: Dictionary
 }
 
 export const PhraseFormRedux: React.FC<ReduxInputProps> = (
@@ -125,15 +120,17 @@ export const PhraseFormRedux: React.FC<ReduxInputProps> = (
         phraseId: props.phraseId
       })
     )
-    props.onOriginalTextChange?.(text)
+    if (props.onOriginalTextChange) {
+      props.onOriginalTextChange(text)
+    }
   }
   const onPlayTextClick = (source: 'original' | 'translated', text: string) =>
     dispatch(
       actions.textToSpeech.request({
         language:
-          source === 'translated'
-            ? props.dictionary.targetLanguage
-            : props.dictionary.originLanguage,
+                    source === 'translated'
+                      ? props.dictionary.targetLanguage
+                      : props.dictionary.originLanguage,
         text
       })
     )

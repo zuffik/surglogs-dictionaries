@@ -1,17 +1,21 @@
 export class Resource<T> {
-  public loading: boolean = false
-  constructor (public data?: T) {}
+    public loading: boolean = false
+    public data?: T;
 
-  public start () {
-    this.loading = true
-  }
+    constructor (data?: T) {
+      this.data = data
+    }
 
-  public finish (data: T) {
-    this.data = data
-    this.loading = false
-  }
+    public start () {
+      this.loading = true
+    }
 
-  public get hasData (): boolean {
-    return typeof this.data === 'undefined'
-  }
+    public finish (data: T) {
+      this.data = data
+      this.loading = false
+    }
+
+    public get hasData (): boolean {
+      return typeof this.data === 'undefined'
+    }
 }

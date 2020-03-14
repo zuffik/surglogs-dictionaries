@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import SpeakerIcon from '@material-ui/icons/RecordVoiceOver'
 import { IconButton, InputAdornment } from '@material-ui/core'
 

@@ -8,7 +8,7 @@ import { theme } from './services/Theme'
 import { BrowserRouter } from 'react-router-dom'
 import { RouterLayout } from './components/router/RouterLayout'
 
-const App = (props: {}) => (
+const App = () => (
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <CssBaseline />
