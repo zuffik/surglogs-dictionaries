@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { CircularProgress, Grid, IconButton, TextField } from '@material-ui/core'
 import Delete from '@material-ui/icons/Delete'
@@ -36,9 +36,6 @@ export const PhraseForm: React.FC<Props> = (
 ): React.ReactElement => {
   const styles = useStyles(props)
   const hints = props.hints?.data || []
-  const [updatedTranslatedText, updateTranslatedText] = useState(false)
-  const translatedText = updatedTranslatedText || hints.length === 0 ? props.translatedText : hints[0]
-  const onTranslatedTextChange = (text: string) => updateTranslatedText(text !== '')
   return (
     <Grid container spacing={1}>
       <Grid item xs={5}>
@@ -64,8 +61,8 @@ export const PhraseForm: React.FC<Props> = (
           options={hints}
           freeSolo
           getOptionLabel={hint => hint}
-          onChange={(e: any, value: string | null) => onTranslatedTextChange(value || '')}
-          value={translatedText}
+          onChange={(e: any, value: string | null) => props.onTranslatedTextChange(value || '')}
+          value={props.translatedText}
           disableClearable
           renderInput={params => (
             <TextField
@@ -80,7 +77,7 @@ export const PhraseForm: React.FC<Props> = (
                 ) : (
                   <PhrasePlayButton
                     onClick={() =>
-                      props.onPlayTextClick('translated', translatedText)
+                      props.onPlayTextClick('translated', props.translatedText)
                     }
                   />
                 )
@@ -109,7 +106,7 @@ export const PhraseFormRedux: React.FC<ReduxInputProps> = (
   props: ReduxInputProps
 ): React.ReactElement => {
   const dispatch = useDispatch()
-  const hints = useSelector(
+  const hintResource = useSelector(
     (state: State) => state.translations[props.phraseId]
   )
   const [timeout, setTimeoutForTyping] = useState<NodeJS.Timeout | undefined>(undefined)
@@ -138,12 +135,19 @@ export const PhraseFormRedux: React.FC<ReduxInputProps> = (
         text
       })
     )
+  const hints = hintResource?.data || []
+  const onTranslatedTextChange = useCallback(props.onTranslatedTextChange!.bind(undefined, hints[0]), [hints])
+  useEffect(() => {
+    if (hints.length > 0) {
+      onTranslatedTextChange()
+    }
+  }, [hints, onTranslatedTextChange])
   return (
     <PhraseForm
       {...(props as Props)}
       onOriginalTextChange={onOriginalTextChange}
       onPlayTextClick={onPlayTextClick}
-      hints={hints}
+      hints={hintResource}
     />
   )
 }

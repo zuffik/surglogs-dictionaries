@@ -15,6 +15,7 @@ export const actions = {
   ),
   createDictionary: actionCreator<Dictionary>('createDictionary'),
   updateDictionary: actionCreator<Dictionary>('updateDictionary'),
+  deleteDictionary: actionCreator<Dictionary>('deleteDictionary'),
 
   fetchTranslations: asyncActionCreator<FetchTranslationsRequestPayload,
         FetchTranslationsResponsePayload>('fetchTranslations'),

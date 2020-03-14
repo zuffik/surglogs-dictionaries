@@ -10,11 +10,40 @@ import { Resource } from '../types/api/Resource'
 import { AsyncActionResponse } from '../services/AsyncActionCreator'
 import { Language } from '../types/Language'
 import { TextToSpeechRequestPayload, TextToSpeechResponsePayload } from '../types/dto/TextToSpeechPayload'
+import { Dictionary } from '../types/Dictionary'
+import chance from 'chance'
 
 export const reducers: Reducers<State, any> = {
   [actions.login.type]: (state: State, action: Action<User>) => {
     state.user = action.payload
     database.setItem('user', state.user)
+    return state
+  },
+  [actions.createDictionary.type]: (state: State, action: Action<Dictionary>) => {
+    state.dictionaries = [
+      ...state.dictionaries,
+      {
+        ...action.payload,
+        id: chance().guid(),
+        phrases: action.payload.phrases.map(phrase => ({
+          ...phrase,
+          id: chance().guid()
+        }))
+      }
+    ]
+    database.setItem('dictionaries', state.dictionaries)
+    return state
+  },
+  [actions.updateDictionary.type]: (state: State, action: Action<Dictionary>) => {
+    const index = _.findIndex(state.dictionaries, dict => action.payload.id === dict.id)
+    state.dictionaries = state.dictionaries.slice()
+    state.dictionaries[index] = action.payload
+    database.setItem('dictionaries', state.dictionaries)
+    return state
+  },
+  [actions.deleteDictionary.type]: (state: State, action: Action<Dictionary>) => {
+    state.dictionaries = state.dictionaries.slice().filter(item => item.id !== action.payload.id)
+    database.setItem('dictionaries', state.dictionaries)
     return state
   },
   [actions.setDictionaryForForm.type]: (

@@ -1,10 +1,12 @@
 import React from 'react'
-import { ListItem, ListItemText } from '@material-ui/core'
+import { IconButton, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core'
 import { Dictionary } from '../../types/Dictionary'
 import { Link } from 'react-router-dom'
+import Delete from '@material-ui/icons/Delete'
 
 interface Props {
     dictionary: Dictionary
+    onDelete: () => void;
 }
 
 export const DictionaryListItem: React.FC<Props> = (
@@ -16,6 +18,11 @@ export const DictionaryListItem: React.FC<Props> = (
         primary={props.dictionary.label}
         secondary={`Phrases: ${props.dictionary.phrases.length}`}
       />
+      <ListItemSecondaryAction>
+        <IconButton onClick={props.onDelete}>
+          <Delete />
+        </IconButton>
+      </ListItemSecondaryAction>
     </ListItem>
   )
 }

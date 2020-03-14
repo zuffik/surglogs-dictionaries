@@ -15,6 +15,7 @@ export default {
 
 export const list = () => (
   <DictionaryList
+    onDeleteItem={action('onDeleteItem')}
     dictionaries={_.times(
       number('No. of dictionaries', 3, {
         min: 0,

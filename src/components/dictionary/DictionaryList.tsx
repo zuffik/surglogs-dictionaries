@@ -1,15 +1,17 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { Box, Button, Card, Grid, List, Typography } from '@material-ui/core'
+import { Box, Breadcrumbs, Button, Card, Grid, List, Typography, Link as MuiLink } from '@material-ui/core'
 import { Dictionary } from '../../types/Dictionary'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../../redux/State'
 import { Link } from 'react-router-dom'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import { DictionaryListItem } from './DictionaryListItem'
+import { actions } from '../../redux/Actions'
 
 interface Props {
     dictionaries: Dictionary[]
+    onDeleteItem: (dictionary: Dictionary) => void;
 }
 
 const useStyles = makeStyles(() => ({
@@ -24,12 +26,17 @@ export const DictionaryList: React.FC<Props> = (
   const styles = useStyles(props)
   return (
         <>
+          <Box mb={2}>
+            <Breadcrumbs>
+              <MuiLink component={Link} to='/'>Home</MuiLink>
+            </Breadcrumbs>
+          </Box>
           <Typography variant='h3'>Dictionaries</Typography>
           {props.dictionaries.length > 0 ? (
             <Card classes={{ root: styles.card }} elevation={3}>
               <List>
                 {props.dictionaries.map(item => (
-                  <DictionaryListItem key={item.id} dictionary={item} />
+                  <DictionaryListItem key={item.id} dictionary={item} onDelete={() => props.onDeleteItem(item)} />
                 ))}
               </List>
             </Card>
@@ -63,6 +70,8 @@ interface ReduxInputProps extends Partial<Props> {
 export const DictionaryListRedux: React.FC<ReduxInputProps> = (
   props: ReduxInputProps
 ): React.ReactElement => {
+  const dispatch = useDispatch()
   const dictionaries = useSelector((state: State) => state.dictionaries)
-  return <DictionaryList {...props} dictionaries={dictionaries} />
+  const onDeleteItem = (item: Dictionary) => dispatch(actions.deleteDictionary(item))
+  return <DictionaryList {...props} dictionaries={dictionaries} onDeleteItem={onDeleteItem} />
 }

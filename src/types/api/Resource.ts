@@ -16,6 +16,6 @@ export class Resource<T> {
     }
 
     public get hasData (): boolean {
-      return typeof this.data === 'undefined'
+      return typeof this.data !== 'undefined'
     }
 }
