@@ -1,17 +1,22 @@
 import * as React from 'react'
+import { useState } from 'react'
 import { makeStyles, Theme } from '@material-ui/core/styles'
 import {
   Avatar,
   Button,
-  Checkbox,
   Container,
-  FormControlLabel,
   TextField,
   Typography
 } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import { useDispatch, useSelector } from 'react-redux'
+import { actions } from '../../redux/Actions'
+import { State } from '../../redux/State'
+import { Redirect } from 'react-router'
 
-interface Props {}
+interface Props {
+  onSubmit: (email: string, password: string) => void
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
@@ -37,6 +42,8 @@ export const LoginForm: React.FC<Props> = (
   props: Props
 ): React.ReactElement => {
   const styles = useStyles(props)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   return (
     <Container component='main' maxWidth='xs'>
       <div className={styles.paper}>
@@ -46,44 +53,60 @@ export const LoginForm: React.FC<Props> = (
         <Typography component='h1' variant='h5'>
           Sign in
         </Typography>
-        <form className={styles.form} noValidate>
-          <TextField
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            id='email'
-            label='Email Address'
-            name='email'
-            autoComplete='email'
-            autoFocus
-          />
-          <TextField
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            name='password'
-            label='Password'
-            type='password'
-            id='password'
-            autoComplete='current-password'
-          />
-          <FormControlLabel
-            control={<Checkbox value='remember' color='primary' />}
-            label='Remember me'
-          />
-          <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            color='primary'
-            className={styles.submit}
-          >
-            Sign In
-          </Button>
-        </form>
+        <TextField
+          variant='outlined'
+          margin='normal'
+          required
+          fullWidth
+          id='email'
+          label='Email Address'
+          name='email'
+          autoComplete='email'
+          autoFocus
+          data-testid='email'
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+        />
+        <TextField
+          variant='outlined'
+          margin='normal'
+          required
+          fullWidth
+          name='password'
+          label='Password'
+          type='password'
+          id='password'
+          autoComplete='current-password'
+          data-testid='password'
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+        />
+        <Button
+          fullWidth
+          variant='contained'
+          color='primary'
+          data-testid='submit'
+          onClick={() => props.onSubmit(email, password)}
+          className={styles.submit}
+        >
+          Sign In
+        </Button>
       </div>
     </Container>
   )
+}
+
+interface ReduxInputProps extends Partial<Props> {}
+
+export const LoginFormRedux: React.FC<ReduxInputProps> = (
+  props: ReduxInputProps
+): React.ReactElement => {
+  const dispatch = useDispatch()
+  const onSubmit = (email: string, password: string) =>
+    dispatch(actions.login({ email, password }))
+  const user = useSelector((state: State) => state.user)
+  if (user) {
+    return <Redirect to='/' />
+  }
+  return <LoginForm {...props} onSubmit={onSubmit} />
 }

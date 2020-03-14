@@ -1,6 +1,10 @@
 import * as React from 'react'
 import { Redirect, Route, Switch } from 'react-router'
-import { LoginForm } from '../login/LoginForm'
+import { LoginFormRedux } from '../login/LoginForm'
+import { AuthRouteRedux } from './AuthRoute'
+import { DictionaryListRedux } from '../dictionary/DictionaryList'
+import { Box } from '@material-ui/core'
+import { DictionaryFormRedux } from '../dictionary/DictionaryForm'
 
 interface Props {}
 
@@ -8,11 +12,19 @@ export const RouterLayout: React.FC<Props> = (
   props: Props
 ): React.ReactElement => {
   return (
-    <Switch>
-      <Route exact path='/login'>
-        <LoginForm />
-      </Route>
-      <Redirect to='/login' />
-    </Switch>
+    <Box p={3}>
+      <Switch>
+        <Route exact path='/login'>
+          <LoginFormRedux />
+        </Route>
+        <AuthRouteRedux exact path='/'>
+          <DictionaryListRedux />
+        </AuthRouteRedux>
+        <AuthRouteRedux exact path='/dictionary/:id'>
+          <DictionaryFormRedux />
+        </AuthRouteRedux>
+        <Redirect to='/login' />
+      </Switch>
+    </Box>
   )
 }
