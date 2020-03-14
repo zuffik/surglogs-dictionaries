@@ -18,7 +18,10 @@ export function * watch<P, R, S extends object> (
       const state: S = yield select((state: S) => state)
       try {
         const response = yield call(action, state)
-        yield put(asyncAction.response(response))
+        yield put(asyncAction.response({
+          request: action.payload,
+          response
+        }))
       } catch (e) {
         console.error('Error with action', action.type, e)
         yield put(

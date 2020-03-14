@@ -13,6 +13,7 @@
     "@types/node": "12.12.29",
     "@types/react": "16.9.23",
     "@types/react-dom": "16.9.5",
+    "axios": "0.19.2",
     "chance": "1.1.4",
     "lodash": "4.17.15",
     "react": "16.13.0",
@@ -31,6 +32,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "lint": "npm run lint:files \"src/**/*.{js,jsx,ts,tsx}\" && npm run lint:files \"cypress/integration/**/*.{js,jsx,ts,tsx}\"",
+    "lint:fix:files": "npm run lint:fix \"src/**/*.{js,jsx,ts,tsx}\" && npm run lint:fix \"cypress/integration/**/*.{js,jsx,ts,tsx}\"",
+    "lint:fix": "standardx --fix",
     "lint:files": "standardx",
     "test": "cypress run",
     "test:open": "cypress open",
@@ -91,10 +94,10 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [
-      "yarn lint:files --fix"
+      "yarn lint:fix"
     ],
     "cypress/integration/**/*.{js,jsx,ts,tsx}": [
-      "yarn lint:files --fix"
+      "yarn lint:fix"
     ]
   },
   "standardx": {
@@ -107,6 +110,9 @@
       "jest",
       "cypress"
     ],
-    "globals": ["cy", "Cypress"]
+    "globals": [
+      "cy",
+      "Cypress"
+    ]
   }
 }

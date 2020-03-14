@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { CircularProgress, Grid, IconButton, TextField } from '@material-ui/core'
 import Delete from '@material-ui/icons/Delete'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '../../redux/Actions'
-import { Dictionary } from '../../types/Dictionary'
 import { PhrasePlayButton } from './PhrasePlayButton'
 import { Resource } from '../../types/api/Resource'
 import { State } from '../../redux/State'
 import { Autocomplete } from '@material-ui/lab'
+import { Language } from '../../types/Language'
 
 interface Props {
     originalText: string
@@ -36,6 +36,9 @@ export const PhraseForm: React.FC<Props> = (
 ): React.ReactElement => {
   const styles = useStyles(props)
   const hints = props.hints?.data || []
+  const [updatedTranslatedText, updateTranslatedText] = useState(false)
+  const translatedText = updatedTranslatedText || hints.length === 0 ? props.translatedText : hints[0]
+  const onTranslatedTextChange = (text: string) => updateTranslatedText(text !== '')
   return (
     <Grid container spacing={1}>
       <Grid item xs={5}>
@@ -61,10 +64,8 @@ export const PhraseForm: React.FC<Props> = (
           options={hints}
           freeSolo
           getOptionLabel={hint => hint}
-          onChange={(e: any, value: string | null) =>
-            props.onTranslatedTextChange(value || '')
-          }
-          value={props.translatedText}
+          onChange={(e: any, value: string | null) => onTranslatedTextChange(value || '')}
+          value={translatedText}
           disableClearable
           renderInput={params => (
             <TextField
@@ -79,7 +80,7 @@ export const PhraseForm: React.FC<Props> = (
                 ) : (
                   <PhrasePlayButton
                     onClick={() =>
-                      props.onPlayTextClick('translated', props.translatedText)
+                      props.onPlayTextClick('translated', translatedText)
                     }
                   />
                 )
@@ -100,7 +101,8 @@ export const PhraseForm: React.FC<Props> = (
 
 interface ReduxInputProps extends Partial<Props> {
     phraseId: string
-    dictionary: Dictionary
+    originLanguage: Language
+    targetLanguage: Language
 }
 
 export const PhraseFormRedux: React.FC<ReduxInputProps> = (
@@ -110,16 +112,18 @@ export const PhraseFormRedux: React.FC<ReduxInputProps> = (
   const hints = useSelector(
     (state: State) => state.translations[props.phraseId]
   )
+  const [timeout, setTimeoutForTyping] = useState<NodeJS.Timeout | undefined>(undefined)
 
   const onOriginalTextChange = (text: string) => {
-    dispatch(
+    if (timeout) clearTimeout(timeout)
+    setTimeoutForTyping(setTimeout(() => dispatch(
       actions.fetchTranslations.request({
         text,
-        originLanguage: props.dictionary?.originLanguage,
-        targetLanguage: props.dictionary?.targetLanguage,
+        originLanguage: props.originLanguage,
+        targetLanguage: props.targetLanguage,
         phraseId: props.phraseId
       })
-    )
+    ), 500))
     if (props.onOriginalTextChange) {
       props.onOriginalTextChange(text)
     }
@@ -129,8 +133,8 @@ export const PhraseFormRedux: React.FC<ReduxInputProps> = (
       actions.textToSpeech.request({
         language:
                     source === 'translated'
-                      ? props.dictionary.targetLanguage
-                      : props.dictionary.originLanguage,
+                      ? props.targetLanguage
+                      : props.originLanguage,
         text
       })
     )

@@ -2,14 +2,9 @@ import { actionCreatorFactory } from 'typescript-fsa'
 import { User } from '../types/User'
 import { Dictionary } from '../types/Dictionary'
 import { asyncActionCreator } from '../services/AsyncActionCreator'
-import {
-  FetchTranslationsRequestPayload,
-  FetchTranslationsResponsePayload
-} from '../types/dto/FetchTranslationsPayload'
-import {
-  TextToSpeechRequestPayload,
-  TextToSpeechResponsePayload
-} from '../types/dto/TextToSpeechPayload'
+import { FetchTranslationsRequestPayload, FetchTranslationsResponsePayload } from '../types/dto/FetchTranslationsPayload'
+import { TextToSpeechRequestPayload, TextToSpeechResponsePayload } from '../types/dto/TextToSpeechPayload'
+import { Language } from '../types/Language'
 
 const actionCreator = actionCreatorFactory()
 
@@ -21,12 +16,10 @@ export const actions = {
   createDictionary: actionCreator<Dictionary>('createDictionary'),
   updateDictionary: actionCreator<Dictionary>('updateDictionary'),
 
-  fetchTranslations: asyncActionCreator<
-    FetchTranslationsRequestPayload,
-    FetchTranslationsResponsePayload
-  >('fetchTranslations'),
-  textToSpeech: asyncActionCreator<
-    TextToSpeechRequestPayload,
-    TextToSpeechResponsePayload
-  >('textToSpeech')
+  fetchTranslations: asyncActionCreator<FetchTranslationsRequestPayload,
+        FetchTranslationsResponsePayload>('fetchTranslations'),
+  textToSpeech: asyncActionCreator<TextToSpeechRequestPayload,
+        TextToSpeechResponsePayload>('textToSpeech'),
+  fetchLanguages: asyncActionCreator<{},
+        Language[]>('fetchLanguages')
 }

@@ -5,12 +5,11 @@ import { Action } from 'typescript-fsa'
 import { User } from '../types/User'
 import { database } from '../services/Database'
 import * as _ from 'lodash'
-import {
-  FetchTranslationsRequestPayload,
-  FetchTranslationsResponsePayload
-} from '../types/dto/FetchTranslationsPayload'
+import { FetchTranslationsRequestPayload, FetchTranslationsResponsePayload } from '../types/dto/FetchTranslationsPayload'
 import { Resource } from '../types/api/Resource'
 import { AsyncActionResponse } from '../services/AsyncActionCreator'
+import { Language } from '../types/Language'
+import { TextToSpeechRequestPayload, TextToSpeechResponsePayload } from '../types/dto/TextToSpeechPayload'
 
 export const reducers: Reducers<State, any> = {
   [actions.login.type]: (state: State, action: Action<User>) => {
@@ -54,16 +53,28 @@ export const reducers: Reducers<State, any> = {
   },
   [actions.fetchTranslations.response.type]: (
     state: State,
-    action: Action<
-      AsyncActionResponse<
-        FetchTranslationsRequestPayload,
-        FetchTranslationsResponsePayload
-      >
-    >
+    action: Action<AsyncActionResponse<FetchTranslationsRequestPayload,
+            FetchTranslationsResponsePayload>>
   ) => {
+    state.translations[action.payload.request.phraseId] = _.clone(state.translations[action.payload.request.phraseId])
     state.translations[action.payload.request.phraseId].finish(
       action.payload.response.translations
     )
+    return state
+  },
+  [actions.fetchLanguages.request.type]: (state: State) => {
+    state.possibleLanguages = _.clone(state.possibleLanguages)
+    state.possibleLanguages.start()
+    return state
+  },
+  [actions.fetchLanguages.response.type]: (state: State, action: Action<AsyncActionResponse<{}, Language[]>>) => {
+    state.possibleLanguages = _.clone(state.possibleLanguages)
+    state.possibleLanguages.finish(action.payload.response)
+    return state
+  },
+  [actions.textToSpeech.response.type]: (state: State, action: Action<AsyncActionResponse<TextToSpeechRequestPayload, TextToSpeechResponsePayload>>) => {
+    const audio = new Audio(action.payload.response.audio)
+    audio.play()
     return state
   }
 }

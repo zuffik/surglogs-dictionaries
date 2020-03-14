@@ -2,19 +2,19 @@ import { Language } from '../../types/Language'
 
 export const languages: Language[] = [
   {
-    code: 'sk-SK',
+    code: 'sk',
     label: 'Slovak'
   },
   {
-    code: 'cs-CZ',
+    code: 'cs',
     label: 'Czech'
   },
   {
-    code: 'en-US',
+    code: 'en',
     label: 'English'
   },
   {
-    code: 'es-ES',
+    code: 'es',
     label: 'Spanish'
   }
 ]

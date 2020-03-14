@@ -73,7 +73,8 @@ export const DictionaryForm: React.FC<Props> = (props: Props): React.ReactElemen
       <Grid item xs={12}>
         {phrases.map((phrase, i) => (
           <PhraseFormRedux key={phrase.id}
-            dictionary={props.dictionary}
+            originLanguage={originLanguage}
+            targetLanguage={targetLanguage}
             phraseId={phrase.id}
             onOriginalTextChange={setPhraseField(i, 'original')}
             onTranslatedTextChange={setPhraseField(i, 'translated')}
@@ -106,6 +107,7 @@ export const DictionaryFormRedux: React.FC<ReduxInputProps> = (props: ReduxInput
   const dispatch = useDispatch()
   const params = useParams<{ id: string }>()
   useEffect(() => {
+    dispatch(actions.fetchLanguages.request({}))
     dispatch(actions.setDictionaryForForm(params))
     return () => {
       dispatch(actions.setDictionaryForForm(undefined))

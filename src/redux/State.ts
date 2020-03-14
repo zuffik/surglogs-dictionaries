@@ -20,11 +20,11 @@ export class State {
     this.dictionaries = database.getItem<Dictionary[]>('dictionaries', [])
     this.defaultOriginLanguage = {
       label: 'Slovak',
-      code: 'sk-SK'
+      code: 'sk'
     }
     this.defaultTargetLanguage = {
       label: 'English',
-      code: 'en-US'
+      code: 'en'
     }
   }
 }
