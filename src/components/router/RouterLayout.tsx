@@ -5,11 +5,12 @@ import { AuthRouteRedux } from './AuthRoute'
 import { DictionaryListRedux } from '../dictionary/DictionaryList'
 import { Box } from '@material-ui/core'
 import { DictionaryFormRedux } from '../dictionary/DictionaryForm'
+import { LogoutButtonRedux } from '../login/LogoutButton'
 
-interface Props {}
+interface Props {
+}
 
-export const RouterLayout: React.FC<Props> = (
-): React.ReactElement => {
+export const RouterLayout: React.FC<Props> = (): React.ReactElement => {
   return (
     <Box p={3}>
       <Switch>
@@ -24,6 +25,7 @@ export const RouterLayout: React.FC<Props> = (
         </AuthRouteRedux>
         <Redirect to='/login' />
       </Switch>
+      <LogoutButtonRedux />
     </Box>
   )
 }

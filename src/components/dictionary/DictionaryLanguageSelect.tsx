@@ -11,6 +11,8 @@ interface Props {
     value: Language
     languages: Resource<Language[]>
     label: string
+    menuId?: string
+    'data-testid'?: string
     classes?: TextFieldProps['classes']
 }
 
@@ -27,15 +29,17 @@ export const DictionaryLanguageSelect: React.FC<Props> = (
 ): React.ReactElement => {
   const styles = useStyles(props)
   if (props.languages.loading) {
-    return <LinearProgress classes={{ root: styles.loader }} />
+    return <LinearProgress classes={{ root: styles.loader }} data-testid='dictionary-language-loader' />
   }
   return (
         <>
           <TextField
             label={props.label}
             select
+            data-testid={props['data-testid']}
             classes={props.classes}
             value={props.value.code}
+            SelectProps={{ MenuProps: { id: props.menuId } }}
             onChange={e =>
               props.onChange(
                         _.find(props.languages.data, l => l.code === e.target.value)!

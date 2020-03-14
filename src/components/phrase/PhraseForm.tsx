@@ -37,10 +37,11 @@ export const PhraseForm: React.FC<Props> = (
   const styles = useStyles(props)
   const hints = props.hints?.data || []
   return (
-    <Grid container spacing={1}>
+    <Grid container spacing={1} data-testid='phrase-form-container'>
       <Grid item xs={5}>
         <TextField
           label='Original text'
+          data-testid='phrase-form-original-text'
           onChange={e => props.onOriginalTextChange(e.target.value)}
           value={props.originalText}
           size='small'
@@ -64,16 +65,18 @@ export const PhraseForm: React.FC<Props> = (
           onChange={(e: any, value: string | null) => props.onTranslatedTextChange(value || '')}
           value={props.translatedText}
           disableClearable
+          id='phrase-form-translated-text-hints'
           renderInput={params => (
             <TextField
               {...params}
               label='Translated text'
               size='small'
+              data-testid='phrase-form-translated-text'
               onChange={e => props.onTranslatedTextChange(e.target.value)}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: props.hints?.loading ? (
-                  <CircularProgress size={20} />
+                  <CircularProgress size={20} data-testid='phrase-form-translate-loader' />
                 ) : (
                   <PhrasePlayButton
                     onClick={() =>
@@ -88,7 +91,7 @@ export const PhraseForm: React.FC<Props> = (
         />
       </Grid>
       <Grid item xs={1}>
-        <IconButton onClick={props.onRemove}>
+        <IconButton onClick={props.onRemove} data-testid='phrase-form-delete-button'>
           <Delete />
         </IconButton>
       </Grid>
@@ -129,9 +132,9 @@ export const PhraseFormRedux: React.FC<ReduxInputProps> = (
     dispatch(
       actions.textToSpeech.request({
         language:
-                    source === 'translated'
-                      ? props.targetLanguage
-                      : props.originLanguage,
+        source === 'translated'
+          ? props.targetLanguage
+          : props.originLanguage,
         text
       })
     )

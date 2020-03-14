@@ -17,7 +17,9 @@ export class State {
 
   constructor () {
     this.user = database.getItem('user')
-    this.dictionaries = database.getItem<Dictionary[]>('dictionaries', [])
+    if (this.user) {
+      this.dictionaries = database.getItem<{[K: string]: Dictionary[]}>('dictionaries', {})[this.user.email] || []
+    }
     this.defaultOriginLanguage = {
       label: 'Slovak',
       code: 'sk'

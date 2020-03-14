@@ -16,8 +16,13 @@ import chance from 'chance'
 export const reducers: Reducers<State, any> = {
   [actions.login.type]: (state: State, action: Action<User>) => {
     state.user = action.payload
+    state.dictionaries = database.getItem<{[K: string]: Dictionary[]}>('dictionaries', {})[state.user!.email] || []
     database.setItem('user', state.user)
     return state
+  },
+  [actions.logout.type]: () => {
+    database.removeItem('user')
+    return new State()
   },
   [actions.createDictionary.type]: (state: State, action: Action<Dictionary>) => {
     state.dictionaries = [
@@ -31,19 +36,28 @@ export const reducers: Reducers<State, any> = {
         }))
       }
     ]
-    database.setItem('dictionaries', state.dictionaries)
+    database.setItem('dictionaries', {
+      ...database.getItem('dictionaries'),
+      [state.user!.email]: state.dictionaries
+    })
     return state
   },
   [actions.updateDictionary.type]: (state: State, action: Action<Dictionary>) => {
     const index = _.findIndex(state.dictionaries, dict => action.payload.id === dict.id)
     state.dictionaries = state.dictionaries.slice()
     state.dictionaries[index] = action.payload
-    database.setItem('dictionaries', state.dictionaries)
+    database.setItem('dictionaries', {
+      ...database.getItem('dictionaries'),
+      [state.user!.email]: state.dictionaries
+    })
     return state
   },
   [actions.deleteDictionary.type]: (state: State, action: Action<Dictionary>) => {
     state.dictionaries = state.dictionaries.slice().filter(item => item.id !== action.payload.id)
-    database.setItem('dictionaries', state.dictionaries)
+    database.setItem('dictionaries', {
+      ...database.getItem('dictionaries'),
+      [state.user!.email]: state.dictionaries
+    })
     return state
   },
   [actions.setDictionaryForForm.type]: (

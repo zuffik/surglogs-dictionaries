@@ -13,5 +13,8 @@ describe('Login form test', () => {
       .should('have.value', this.user.password)
     cy.get('[data-testid="submit"]').click()
     cy.url().should('not.include', '/login')
+    cy.window().then(
+      window => expect(window.localStorage.getItem('user')).to.equal(JSON.stringify(this.user))
+    )
   })
 })

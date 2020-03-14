@@ -4,7 +4,7 @@ import { Dictionary } from '../types/Dictionary'
 
 export interface Database {
   user?: User
-  dictionaries: Dictionary[]
+  dictionaries: {[K: string]: Dictionary[]}
 }
 
 export const database = new LocalStorage<Database>()

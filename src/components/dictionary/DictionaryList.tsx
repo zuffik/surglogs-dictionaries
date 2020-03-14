@@ -50,6 +50,7 @@ export const DictionaryList: React.FC<Props> = (
             <Grid container spacing={2}>
               <Grid item>
                 <Button
+                  data-testid='dictionary-create'
                   color='primary'
                   variant='contained'
                   component={Link}

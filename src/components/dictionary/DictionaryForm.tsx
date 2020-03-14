@@ -61,6 +61,7 @@ export const DictionaryForm: React.FC<Props> = (props: Props): React.ReactElemen
         <Grid item>
           <TextField label='Label'
             value={label}
+            data-testid='dictionary-form-label'
             onChange={e => setLabel(e.target.value)}
             classes={{ root: styles.textField }} />
         </Grid>
@@ -69,6 +70,8 @@ export const DictionaryForm: React.FC<Props> = (props: Props): React.ReactElemen
             value={originLanguage}
             classes={{ root: styles.textField }}
             languages={props.languages}
+            data-testid='dictionary-form-origin-language'
+            menuId='dictionary-form-origin-language-menu'
             label='Origin language' />
         </Grid>
         <Grid item>
@@ -76,6 +79,8 @@ export const DictionaryForm: React.FC<Props> = (props: Props): React.ReactElemen
             value={targetLanguage}
             classes={{ root: styles.textField }}
             languages={props.languages}
+            data-testid='dictionary-form-target-language'
+            menuId='dictionary-form-target-language-menu'
             label='Target language' />
         </Grid>
         <Grid item xs={12}>
@@ -94,12 +99,12 @@ export const DictionaryForm: React.FC<Props> = (props: Props): React.ReactElemen
         <Grid item xs={12}>
           <Box display='flex' flexDirection='column'>
             <Box my={2}>
-              <Button variant='outlined' color='primary' size='small' onClick={addPhrase(phrases.length)}>
+              <Button variant='outlined' color='primary' size='small' onClick={addPhrase(phrases.length)} data-testid='dictionary-form-add-phrase'>
                 <Add />
                             Add phrase
               </Button>
             </Box>
-            <Button variant='contained' color='primary' onClick={onSubmit}>
+            <Button variant='contained' color='primary' onClick={onSubmit} data-testid='dictionary-form-submit'>
                         Save
             </Button>
           </Box>

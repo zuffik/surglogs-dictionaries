@@ -1,0 +1,80 @@
+[
+  {
+    "id": "25366086-ee05-56e2-8daa-fe57eb886d2a",
+    "phrases": [
+      {
+        "id": "b6226cff-612d-558d-b1d9-df6b46920a67",
+        "translated": "V tajnej službe jej veličenstva",
+        "original": "In her majesty's secret service"
+      },
+      {
+        "id": "2a46d4ee-5229-51c6-9315-700e02952ecf",
+        "translated": "Pád oblohy",
+        "original": "Skyfall"
+      },
+      {
+        "id": "a96a910d-f5bc-5971-b0be-bf6c39dec302",
+        "translated": "Žiješ len dva krát",
+        "original": "You only live twice"
+      },
+      {
+        "id": "840a9204-d588-53ad-8449-1961f81dbef5",
+        "translated": "Zlatý prst",
+        "original": "Goldfinger"
+      },
+      {
+        "id": "686fa2aa-1de4-54b3-9759-0df5ba8fccf2",
+        "translated": "prízrak",
+        "original": "Spectre"
+      },
+      {
+        "id": "5",
+        "translated": "Nie je čas zomrieť",
+        "original": "No time to die"
+      }
+    ],
+    "originLanguage": {
+      "label": "English",
+      "code": "en"
+    },
+    "targetLanguage": {
+      "label": "Slovak",
+      "code": "sk"
+    },
+    "label": "James Bond"
+  },
+  {
+    "id": "f766edc1-1507-5b2f-9dda-8127fb91b886",
+    "phrases": [
+      {
+        "id": "bdeb3f5e-345e-522f-b260-0e9eeeb4b3d5",
+        "translated": "Papierenský dom",
+        "original": "La casa del papel"
+      },
+      {
+        "id": "21dc7710-d7d2-5fec-9d73-8eb6a57c3e12",
+        "translated": "Veľká peňaženka",
+        "original": "Una cartera grande"
+      },
+      {
+        "id": "64875ca8-e183-5b8b-9458-59b51a787564",
+        "translated": "Moje košele sú staré, ale pekné",
+        "original": "Mis camisetas son viejas pero bonitas"
+      },
+      {
+        "id": "3",
+        "translated": "Juan je jablká",
+        "original": "Juan come manzanas"
+      }
+    ],
+    "originLanguage": {
+      "label": "Spanish",
+      "code": "es"
+    },
+    "targetLanguage": {
+      "label": "Slovak",
+      "code": "sk"
+    },
+    "label": "Španielsko-Slovenský slovník"
+  }
+]

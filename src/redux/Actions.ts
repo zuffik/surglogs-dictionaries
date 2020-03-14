@@ -10,6 +10,7 @@ const actionCreator = actionCreatorFactory()
 
 export const actions = {
   login: actionCreator<User>('login'),
+  logout: actionCreator('logout'),
   setDictionaryForForm: actionCreator<{ id: string } | undefined>(
     'setDictionaryForForm'
   ),

@@ -13,13 +13,13 @@ export const DictionaryListItem: React.FC<Props> = (
   props: Props
 ): React.ReactElement => {
   return (
-    <ListItem button component={Link} to={`/dictionary/${props.dictionary.id}`}>
+    <ListItem button component={Link} to={`/dictionary/${props.dictionary.id}`} data-testid='dictionary-list-item'>
       <ListItemText
         primary={props.dictionary.label}
         secondary={`Phrases: ${props.dictionary.phrases.length}`}
       />
       <ListItemSecondaryAction>
-        <IconButton onClick={props.onDelete}>
+        <IconButton onClick={props.onDelete} data-testid='dictionary-list-item-delete-button'>
           <Delete />
         </IconButton>
       </ListItemSecondaryAction>
